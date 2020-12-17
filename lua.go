@@ -4,12 +4,11 @@ const ResetScript = `
 	local routeKey = KEYS[1]
 	local staticKey = KEYS[2]
 	local routeDeadline = ARGV[1]
-	local expireTime = 3600
 
 	redis.call('HSET', staticKey, "Count", 1)
 	redis.call('HSET', routeKey, "Count", 1, "Deadline", routeDeadline)
-	redis.call('EXPIRE', staticKey, expireTime)
-	redis.call('EXPIRE', routeKey, expireTime)
+	redis.call('EXPIRE', staticKey, 3600)
+	redis.call('EXPIRE', routeKey, 3600)
 	return 0
 `
 
@@ -29,6 +28,8 @@ const Script = `
 	if not staticCount then 
 		redis.call('HSET', staticKey, "Count", 1)
 		redis.call('HSET', routeKey, "Count", 1, "Deadline", routeDeadline)
+		redis.call('EXPIRE', staticKey, 3600)
+		redis.call('EXPIRE', routeKey, 3600)
 		result[1] = staticLimit - 1
 		result[2] = routeLimit - 1
 		result[3] = routeDeadline 
@@ -44,6 +45,7 @@ const Script = `
 			result[1] = -1
 		end
 		redis.call('HSET', routeKey, "Count", 1, "Deadline", routeDeadline)
+		redis.call('EXPIRE', routeKey, 3600)
 		result[2] = routeLimit - 1
 		result[3] = routeDeadline
 		return result
@@ -60,6 +62,7 @@ const Script = `
 			result[1] = -1
 		end
 		redis.call('HSET', routeKey, "Count", 1, "Deadline", routeDeadline)
+		redis.call('EXPIRE', routeKey, 3600)
 		result[2] = routeLimit - 1
 		result[3] = routeDeadline
 		return result
