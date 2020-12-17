@@ -1,4 +1,4 @@
-module github.com/Jokeramc/gin-limiter
+module github.com/Jokeramc/gin-limit
 
 go 1.13
 
