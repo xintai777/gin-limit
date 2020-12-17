@@ -5,7 +5,7 @@ import (
 
 	"net/http"
 
-	limiter "github.com/davidleitw/gin-limiter"
+	limiter "github.com/Jokeramc/gin-limit"
 	"github.com/gin-gonic/gin"
 	"github.com/go-redis/redis/v8"
 )

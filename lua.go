@@ -4,7 +4,7 @@ const ResetScript = `
 	local routeKey = KEYS[1]
 	local staticKey = KEYS[2]
 	local routeDeadline = ARGV[1]
-	local expireTime = tonumber(ARGV[1]) + 24 * 3600
+	local expireTime = 3600
 
 	redis.call('HSET', staticKey, "Count", 1)
 	redis.call('HSET', routeKey, "Count", 1, "Deadline", routeDeadline)
